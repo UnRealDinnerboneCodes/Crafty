@@ -4,3 +4,5 @@ pluginManagement {
         maven { url "https://papermc.io/repo/repository/maven-public/" }
     }
 }
+
+include("CraftySource")
