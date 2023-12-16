@@ -27,12 +27,12 @@ dependencies {
 //https://github.com/packet-loss-gaming/Hackbook/blob/b21a8fc3630d41236099ddd7d64ab2e688ddd08f/build.gradle#L33
 // Butcher the dev jar so as to publish a properly obfuscated jar
 def javaComponent = components.java as AdhocComponentWithVariants
-//javaComponent.withVariantsFromConfiguration(configurations.apiElements) {
-//    skip()
-//}
-//javaComponent.withVariantsFromConfiguration(configurations.runtimeElements) {
-//    skip()
-//}
+javaComponent.withVariantsFromConfiguration(configurations.apiElements) {
+    skip()
+}
+javaComponent.withVariantsFromConfiguration(configurations.runtimeElements) {
+    skip()
+}
 javaComponent.addVariantsFromConfiguration(configurations.reobf) {
     mapToMavenScope("compile")
 }

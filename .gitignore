@@ -7,3 +7,13 @@
 /.idea/
 /build/
 /plugin/run/
+
+CraftySource/build/
+
+LICENSE
+
+.editorconfig
+
+.DS_Store
+
+README.md
