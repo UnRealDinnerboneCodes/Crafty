@@ -15,7 +15,9 @@ public record CraftyObjective(Objective score) implements UpdatedObjective {
         Scoreboard scoreboard = score.getScoreboard();
         CraftScoreboard craftScoreboard = (CraftScoreboard) scoreboard;
         net.minecraft.world.scores.Objective objective = craftScoreboard.getHandle().getObjective(score.getName());
-        objective.setNumberFormat(BlankFormat.INSTANCE);
+        if(objective.numberFormat() != BlankFormat.INSTANCE) {
+            objective.setNumberFormat(BlankFormat.INSTANCE);
+        }
     }
 
     @Override
@@ -23,6 +25,8 @@ public record CraftyObjective(Objective score) implements UpdatedObjective {
         Scoreboard scoreboard = score.getScoreboard();
         CraftScoreboard craftScoreboard = (CraftScoreboard) scoreboard;
         net.minecraft.world.scores.Objective objective = craftScoreboard.getHandle().getObjective(score.getName());
-        objective.setNumberFormat(null);
+        if(objective.numberFormat() != null) {
+            objective.setNumberFormat(null);
+        }
     }
 }
