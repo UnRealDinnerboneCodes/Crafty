@@ -28,6 +28,8 @@ public class PlayerUtils
                     for (PlayerInfoData entry : wrapperPlayServerPlayerInfo.getEntries()) {
                         if(NAME_CACHE.containsKey(entry.getProfile().getUUID())) {
                             entries.add(new PlayerInfoData(entry.getProfile().withName(NAME_CACHE.get(entry.getProfile().getUUID())), entry.getLatency(), entry.getGameMode(), entry.getDisplayName()));
+                        }else {
+                            entries.add(entry);
                         }
                     }
                 }
