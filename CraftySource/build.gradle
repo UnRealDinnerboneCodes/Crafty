@@ -24,10 +24,17 @@ repositories {
         url("https://s01.oss.sonatype.org/content/repositories/snapshots/")
     }
     maven { url "https://repo.dmulloy2.net/repository/public/" }
+    maven { url 'https://repo.lukasa.lt/repository/maven-public/' }
+
 
 }
+
 
 dependencies {
     paperweightDevelopmentBundle("io.papermc.paper:dev-bundle:${paperVersion}")
     implementation("xyz.jpenilla:reflection-remapper:0.1.0-SNAPSHOT")
+    implementation 'com.comphenix.protocol:ProtocolLib:5.1.0'
+    implementation ('com.comphenix.packetwrapper:PacketWrapper:1.20-2.2.1') {
+        exclude group: 'org.spigotmc'
+    }
 }
