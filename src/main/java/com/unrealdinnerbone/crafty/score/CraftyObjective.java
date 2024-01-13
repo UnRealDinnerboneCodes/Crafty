@@ -4,6 +4,7 @@ import com.unrealdinnerbone.crafty.api.UpdatedObjective;
 import net.minecraft.network.chat.numbers.BlankFormat;
 import net.minecraft.network.chat.numbers.NumberFormat;
 import org.bukkit.craftbukkit.v1_20_R3.scoreboard.CraftScoreboard;
+import org.bukkit.entity.Entity;
 import org.bukkit.scoreboard.Objective;
 import org.bukkit.scoreboard.Score;
 import org.bukkit.scoreboard.Scoreboard;

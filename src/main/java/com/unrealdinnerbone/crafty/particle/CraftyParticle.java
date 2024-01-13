@@ -20,8 +20,6 @@ public class CraftyParticle implements ParticleOption {
         this.particleOptions = CraftParticle.createParticleParam(particle, data);
     }
 
-    //ParticleTypes.CODEC
-
     public CraftyParticle(ParticleOptions options) {
         this.particle = CraftParticle.minecraftToBukkit(options.getType());
         this.data = convertOptionsToType(options);
