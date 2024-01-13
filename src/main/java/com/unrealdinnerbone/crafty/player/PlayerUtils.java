@@ -22,15 +22,18 @@ public class PlayerUtils
         protocolManager.addPacketListener(new PacketAdapter(plugin, PacketType.Play.Server.PLAYER_INFO) {
             @Override
             public void onPacketReceiving(PacketEvent event) {
+
+            }
+
+            @Override
+            public void onPacketSending(PacketEvent event) {
                 WrapperPlayServerPlayerInfo wrapperPlayServerPlayerInfo = new WrapperPlayServerPlayerInfo(event.getPacket());
                 List<PlayerInfoData> entries = new ArrayList<>();
-                if(wrapperPlayServerPlayerInfo.getActions().contains(EnumWrappers.PlayerInfoAction.ADD_PLAYER)) {
-                    for (PlayerInfoData entry : wrapperPlayServerPlayerInfo.getEntries()) {
-                        if(NAME_CACHE.containsKey(entry.getProfile().getUUID())) {
-                            entries.add(new PlayerInfoData(entry.getProfile().withName(NAME_CACHE.get(entry.getProfile().getUUID())), entry.getLatency(), entry.getGameMode(), entry.getDisplayName()));
-                        }else {
-                            entries.add(entry);
-                        }
+                for (PlayerInfoData entry : wrapperPlayServerPlayerInfo.getEntries()) {
+                    if(NAME_CACHE.containsKey(entry.getProfile().getUUID())) {
+                        entries.add(new PlayerInfoData(entry.getProfile().withName(NAME_CACHE.get(entry.getProfile().getUUID())), entry.getLatency(), entry.getGameMode(), entry.getDisplayName()));
+                    } else {
+                        entries.add(entry);
                     }
                 }
                 wrapperPlayServerPlayerInfo.setEntries(entries);
