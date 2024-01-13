@@ -8,6 +8,7 @@ import com.comphenix.protocol.events.PacketAdapter;
 import com.comphenix.protocol.events.PacketEvent;
 import com.comphenix.protocol.wrappers.EnumWrappers;
 import com.comphenix.protocol.wrappers.PlayerInfoData;
+import com.comphenix.protocol.wrappers.WrappedGameProfile;
 import org.bukkit.plugin.Plugin;
 
 import java.util.*;
@@ -31,7 +32,11 @@ public class PlayerUtils
                 List<PlayerInfoData> entries = new ArrayList<>();
                 for (PlayerInfoData entry : wrapperPlayServerPlayerInfo.getEntries()) {
                     if(NAME_CACHE.containsKey(entry.getProfile().getUUID())) {
-                        entries.add(new PlayerInfoData(entry.getProfile().withName(NAME_CACHE.get(entry.getProfile().getUUID())), entry.getLatency(), entry.getGameMode(), entry.getDisplayName()));
+                        WrappedGameProfile profile = entry.getProfile();
+                        WrappedGameProfile newPrifle = new WrappedGameProfile(profile.getUUID(), NAME_CACHE.get(profile.getUUID()));
+                        newPrifle.getProperties().clear();
+                        newPrifle.getProperties().putAll(profile.getProperties());
+                        entries.add(new PlayerInfoData(newPrifle, entry.getLatency(), entry.getGameMode(), entry.getDisplayName()));
                     } else {
                         entries.add(entry);
                     }
