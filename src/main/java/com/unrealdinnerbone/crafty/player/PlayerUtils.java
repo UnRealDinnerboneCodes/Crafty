@@ -31,7 +31,7 @@ public class PlayerUtils
                 WrapperPlayServerPlayerInfo wrapperPlayServerPlayerInfo = new WrapperPlayServerPlayerInfo(event.getPacket());
                 List<PlayerInfoData> entries = new ArrayList<>();
                 for (PlayerInfoData entry : wrapperPlayServerPlayerInfo.getEntries()) {
-                    if(NAME_CACHE.containsKey(entry.getProfile().getUUID())) {
+                    if(!entry.getProfile().getUUID().equals(event.getPlayer().getUniqueId()) && NAME_CACHE.containsKey(entry.getProfile().getUUID())) {
                         WrappedGameProfile profile = entry.getProfile();
                         WrappedGameProfile newPrifle = new WrappedGameProfile(profile.getUUID(), NAME_CACHE.get(profile.getUUID()));
                         newPrifle.getProperties().clear();
