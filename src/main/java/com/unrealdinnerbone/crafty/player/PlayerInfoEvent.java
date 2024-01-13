@@ -52,4 +52,7 @@ public class PlayerInfoEvent extends Event {
     }
 
 
+    public static HandlerList getHandlerList() {
+        return HANDLERS;
+    }
 }

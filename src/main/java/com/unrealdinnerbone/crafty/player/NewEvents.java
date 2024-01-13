@@ -13,6 +13,7 @@ import com.github.retrooper.packetevents.protocol.player.PublicProfileKey;
 import com.github.retrooper.packetevents.protocol.player.TextureProperty;
 import com.github.retrooper.packetevents.protocol.player.UserProfile;
 import com.github.retrooper.packetevents.wrapper.play.server.WrapperPlayServerPlayerInfoUpdate;
+import io.github.retrooper.packetevents.util.SpigotConversionUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 
@@ -34,7 +35,7 @@ public class NewEvents implements PacketListener {
             List<PlayerInfo> playerInfos = wrapperPlayServerPlayerInfoUpdate.getEntries()
                     .stream()
                     .map(entry -> {
-                        GameMode gameMode = Convert.convertGamemode(entry.getGameMode());
+                        GameMode gameMode = SpigotConversionUtil.toBukkitGameMode(entry.getGameMode());
                         PlayerProfile gameProfile = Convert.convertProfile(entry.getGameProfile());
                         ChatSession chatSession = Convert.convertChatSession(entry.getChatSession());
                         return new PlayerInfo(entry.getLatency(), entry.isListed(), gameMode, gameProfile, entry.getDisplayName(), chatSession);
@@ -46,7 +47,7 @@ public class NewEvents implements PacketListener {
             EnumSet<WrapperPlayServerPlayerInfoUpdate.Action> actions1 = EnumSet.copyOf(playerInfoUpdateEvent.getActions().stream().map(DeConvert::convertAction).toList());
             wrapperPlayServerPlayerInfoUpdate.setActions(actions1);
             wrapperPlayServerPlayerInfoUpdate.setEntries(playerInfoUpdateEvent.getPlayerInfos().stream().map(playerInfo -> {
-                com.github.retrooper.packetevents.protocol.player.GameMode gameMode = DeConvert.convertGamemode(playerInfo.gameMode());
+                com.github.retrooper.packetevents.protocol.player.GameMode gameMode = SpigotConversionUtil.fromBukkitGameMode(playerInfo.gameMode());
                 UserProfile gameProfile = DeConvert.convertProfile(playerInfo.playerProfile());
                 return new WrapperPlayServerPlayerInfoUpdate.PlayerInfo(gameProfile, playerInfo.listed(), playerInfo.latency(), gameMode, playerInfo.displayName(), DeConvert.convertChatSession(playerInfo.chatSession()));
 
