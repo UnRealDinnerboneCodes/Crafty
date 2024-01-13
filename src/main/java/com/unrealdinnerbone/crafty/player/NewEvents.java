@@ -42,16 +42,18 @@ public class NewEvents implements PacketListener {
                     }).toList();
             UUID uuid = event.getUser().getUUID();
             PlayerInfoEvent playerInfoUpdateEvent = new PlayerInfoEvent(uuid, actions, playerInfos);
-            Bukkit.getPluginManager().callEvent(playerInfoUpdateEvent);
+            if(playerInfoUpdateEvent.callEvent()) {
+                EnumSet<WrapperPlayServerPlayerInfoUpdate.Action> actions1 = EnumSet.copyOf(playerInfoUpdateEvent.getActions().stream().map(DeConvert::convertAction).toList());
+                wrapperPlayServerPlayerInfoUpdate.setActions(actions1);
+                wrapperPlayServerPlayerInfoUpdate.setEntries(playerInfoUpdateEvent.getPlayerInfos().stream().map(playerInfo -> {
+                    com.github.retrooper.packetevents.protocol.player.GameMode gameMode = SpigotConversionUtil.fromBukkitGameMode(playerInfo.gameMode());
+                    UserProfile gameProfile = DeConvert.convertProfile(playerInfo.playerProfile());
+                    return new WrapperPlayServerPlayerInfoUpdate.PlayerInfo(gameProfile, playerInfo.listed(), playerInfo.latency(), gameMode, playerInfo.displayName(), DeConvert.convertChatSession(playerInfo.chatSession()));
 
-            EnumSet<WrapperPlayServerPlayerInfoUpdate.Action> actions1 = EnumSet.copyOf(playerInfoUpdateEvent.getActions().stream().map(DeConvert::convertAction).toList());
-            wrapperPlayServerPlayerInfoUpdate.setActions(actions1);
-            wrapperPlayServerPlayerInfoUpdate.setEntries(playerInfoUpdateEvent.getPlayerInfos().stream().map(playerInfo -> {
-                com.github.retrooper.packetevents.protocol.player.GameMode gameMode = SpigotConversionUtil.fromBukkitGameMode(playerInfo.gameMode());
-                UserProfile gameProfile = DeConvert.convertProfile(playerInfo.playerProfile());
-                return new WrapperPlayServerPlayerInfoUpdate.PlayerInfo(gameProfile, playerInfo.listed(), playerInfo.latency(), gameMode, playerInfo.displayName(), DeConvert.convertChatSession(playerInfo.chatSession()));
+                }).toList());
+            }
 
-            }).toList());
+
 
 
         }

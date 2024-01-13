@@ -19,6 +19,7 @@ public class PlayerInfoEvent extends Event {
     private final List<PlayerInfo> infos;
 
     public PlayerInfoEvent(UUID player, List<Action> actions, List<PlayerInfo> infos) {
+        super(true);
         this.player = player;
         this.actions = actions;
         this.infos = infos;
