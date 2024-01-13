@@ -8,7 +8,7 @@ import org.bukkit.plugin.Plugin;
 
 public class Utils
 {
-    public void onLoad(Plugin plugin) {
+    public static void onLoad(Plugin plugin) {
         PacketEvents.setAPI(SpigotPacketEventsBuilder.build(plugin));
         PacketEvents.getAPI().getSettings()
                 .bStats(false)
@@ -17,11 +17,11 @@ public class Utils
         PacketEvents.getAPI().load();
     }
 
-    public void onEnable() {
+    public static void onEnable() {
         PacketEvents.getAPI().getEventManager().registerListener(new NewEvents(), PacketListenerPriority.HIGH);
     }
 
-    public void onDisable() {
+    public static void onDisable() {
         PacketEvents.getAPI().terminate();
     }
 }
