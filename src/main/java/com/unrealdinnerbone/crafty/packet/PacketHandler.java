@@ -20,6 +20,7 @@ import io.github.retrooper.packetevents.util.SpigotConversionUtil;
 import net.minecraft.world.phys.Vec3;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
+import org.joml.Vector3f;
 
 import java.util.EnumSet;
 import java.util.List;
@@ -67,7 +68,7 @@ public class PacketHandler implements PacketListener {
             float yaw = wrapperPlayClientVehicleMove.getYaw();
             float pitch = wrapperPlayClientVehicleMove.getPitch();
             UUID uuid = event.getUser().getUUID();
-            Vec3 vec3 = new Vec3(position.getX(), position.getY(), position.getZ());
+            Vector3f vec3 = new Vector3f((float) position.getX(), (float) position.getY(), (float) position.getZ());
             PlayerVehicleEvent playerVehicleEvent = new PlayerVehicleEvent(uuid, vec3, yaw, pitch);
             if(playerVehicleEvent.callEvent()) {
                 wrapperPlayClientVehicleMove.setPosition(new Vector3d(playerVehicleEvent.getVec3().x, playerVehicleEvent.getVec3().y, playerVehicleEvent.getVec3().z));
