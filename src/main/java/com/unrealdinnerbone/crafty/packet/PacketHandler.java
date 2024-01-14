@@ -32,9 +32,9 @@ public class PacketHandler implements PacketListener {
         if(event.getPacketType() == PacketType.Play.Server.PLAYER_INFO_UPDATE) {
             WrapperPlayServerPlayerInfoUpdate wrapperPlayServerPlayerInfoUpdate = new WrapperPlayServerPlayerInfoUpdate(event);
             List<Action> actions = new ArrayList<>(wrapperPlayServerPlayerInfoUpdate.getActions().stream().map(Convert::convertAction).toList());
-            List<PlayerInfo> playerInfos = wrapperPlayServerPlayerInfoUpdate.getEntries()
+            List<PlayerInfo> playerInfos = new ArrayList<>(wrapperPlayServerPlayerInfoUpdate.getEntries()
                     .stream()
-                    .map(Convert::convertPlayerInfo).toList();
+                    .map(Convert::convertPlayerInfo).toList());
             UUID uuid = event.getUser().getUUID();
             PlayerInfoEvent playerInfoUpdateEvent = new PlayerInfoEvent(uuid, actions, playerInfos);
             if(playerInfoUpdateEvent.callEvent()) {
