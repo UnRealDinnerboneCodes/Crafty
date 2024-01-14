@@ -1,4 +1,4 @@
-package com.unrealdinnerbone.crafty.player;
+package com.unrealdinnerbone.crafty.api.player;
 
 public enum Action {
     ADD_PLAYER,

@@ -1,4 +1,4 @@
-package com.unrealdinnerbone.crafty.player;
+package com.unrealdinnerbone.crafty.api.player;
 
 import com.destroystokyo.paper.profile.PlayerProfile;
 import net.kyori.adventure.text.Component;

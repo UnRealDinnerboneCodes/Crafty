@@ -1,19 +1,23 @@
-package com.unrealdinnerbone.crafty.player;
+package com.unrealdinnerbone.crafty.packet;
 
 import com.destroystokyo.paper.profile.PlayerProfile;
 import com.destroystokyo.paper.profile.ProfileProperty;
 import com.github.retrooper.packetevents.event.PacketListener;
-import com.github.retrooper.packetevents.event.PacketListenerAbstract;
-import com.github.retrooper.packetevents.event.PacketListenerPriority;
+import com.github.retrooper.packetevents.event.PacketReceiveEvent;
 import com.github.retrooper.packetevents.event.PacketSendEvent;
-import com.github.retrooper.packetevents.event.simple.PacketPlaySendEvent;
 import com.github.retrooper.packetevents.protocol.chat.RemoteChatSession;
 import com.github.retrooper.packetevents.protocol.packettype.PacketType;
 import com.github.retrooper.packetevents.protocol.player.PublicProfileKey;
 import com.github.retrooper.packetevents.protocol.player.TextureProperty;
 import com.github.retrooper.packetevents.protocol.player.UserProfile;
+import com.github.retrooper.packetevents.util.Vector3d;
+import com.github.retrooper.packetevents.wrapper.play.client.WrapperPlayClientVehicleMove;
 import com.github.retrooper.packetevents.wrapper.play.server.WrapperPlayServerPlayerInfoUpdate;
+import com.unrealdinnerbone.crafty.api.events.PlayerInfoEvent;
+import com.unrealdinnerbone.crafty.api.events.PlayerVehicleEvent;
+import com.unrealdinnerbone.crafty.api.player.*;
 import io.github.retrooper.packetevents.util.SpigotConversionUtil;
+import net.minecraft.world.phys.Vec3;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 
@@ -22,7 +26,7 @@ import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
-public class NewEvents implements PacketListener {
+public class PacketHandler implements PacketListener {
 
     @Override
     public void onPacketSend(PacketSendEvent event) {
@@ -52,22 +56,31 @@ public class NewEvents implements PacketListener {
 
                 }).toList());
             }
+        }
+    }
 
-
-
+    @Override
+    public void onPacketReceive(PacketReceiveEvent event) {
+        if(event.getPacketType() == PacketType.Play.Client.VEHICLE_MOVE) {
+            WrapperPlayClientVehicleMove wrapperPlayClientVehicleMove = new WrapperPlayClientVehicleMove(event);
+            Vector3d position = wrapperPlayClientVehicleMove.getPosition();
+            float yaw = wrapperPlayClientVehicleMove.getYaw();
+            float pitch = wrapperPlayClientVehicleMove.getPitch();
+            UUID uuid = event.getUser().getUUID();
+            Vec3 vec3 = new Vec3(position.getX(), position.getY(), position.getZ());
+            PlayerVehicleEvent playerVehicleEvent = new PlayerVehicleEvent(uuid, vec3, yaw, pitch);
+            if(playerVehicleEvent.callEvent()) {
+                wrapperPlayClientVehicleMove.setPosition(new Vector3d(playerVehicleEvent.getVec3().x, playerVehicleEvent.getVec3().y, playerVehicleEvent.getVec3().z));
+                wrapperPlayClientVehicleMove.setYaw(playerVehicleEvent.getYaw());
+                wrapperPlayClientVehicleMove.setPitch(playerVehicleEvent.getPitch());
+            }
 
         }
     }
 
-
-
     public static class Convert {
         public static Action convertAction(WrapperPlayServerPlayerInfoUpdate.Action action) {
             return Action.valueOf(action.name());
-        }
-
-        public static GameMode convertGamemode(com.github.retrooper.packetevents.protocol.player.GameMode gameMode) {
-            return GameMode.valueOf(gameMode.name());
         }
 
         public static PlayerProfile convertProfile(UserProfile userProfile) {
@@ -91,10 +104,6 @@ public class NewEvents implements PacketListener {
 
         public static WrapperPlayServerPlayerInfoUpdate.Action convertAction(Action action) {
             return WrapperPlayServerPlayerInfoUpdate.Action.valueOf(action.name());
-        }
-
-        public static com.github.retrooper.packetevents.protocol.player.GameMode convertGamemode(GameMode gameMode) {
-            return com.github.retrooper.packetevents.protocol.player.GameMode.valueOf(gameMode.name());
         }
 
         public static UserProfile convertProfile(PlayerProfile playerProfile) {

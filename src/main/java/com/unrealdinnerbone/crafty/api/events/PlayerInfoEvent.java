@@ -1,12 +1,11 @@
-package com.unrealdinnerbone.crafty.player;
+package com.unrealdinnerbone.crafty.api.events;
 
+import com.unrealdinnerbone.crafty.api.player.Action;
+import com.unrealdinnerbone.crafty.api.player.PlayerInfo;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 import org.jetbrains.annotations.NotNull;
 
-import java.security.PublicKey;
-import java.time.Instant;
-import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 
@@ -30,29 +29,21 @@ public class PlayerInfoEvent extends Event {
     }
 
     public List<Action> getActions() {
-        return Collections.unmodifiableList(actions);
+        return actions;
     }
 
     public List<PlayerInfo> getPlayerInfos() {
-        return Collections.unmodifiableList(infos);
-    }
-
-    public void setPlayerInfos(List<PlayerInfo> infos) {
-        this.infos.clear();
-        this.infos.addAll(infos);
-    }
-
-    public void setActions(List<Action> actions) {
-        this.actions.clear();
-        this.actions.addAll(actions);
+        return infos;
     }
 
     @Override
-    public @NotNull HandlerList getHandlers() {
+    @NotNull
+    public HandlerList getHandlers() {
         return HANDLERS;
     }
 
 
+    @NotNull
     public static HandlerList getHandlerList() {
         return HANDLERS;
     }

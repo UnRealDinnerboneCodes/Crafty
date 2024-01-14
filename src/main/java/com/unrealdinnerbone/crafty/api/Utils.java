@@ -1,8 +1,8 @@
-package com.unrealdinnerbone.crafty;
+package com.unrealdinnerbone.crafty.api;
 
 import com.github.retrooper.packetevents.PacketEvents;
 import com.github.retrooper.packetevents.event.PacketListenerPriority;
-import com.unrealdinnerbone.crafty.player.NewEvents;
+import com.unrealdinnerbone.crafty.packet.PacketHandler;
 import io.github.retrooper.packetevents.factory.spigot.SpigotPacketEventsBuilder;
 import org.bukkit.plugin.Plugin;
 
@@ -18,7 +18,7 @@ public class Utils
     }
 
     public static void onEnable() {
-        PacketEvents.getAPI().getEventManager().registerListener(new NewEvents(), PacketListenerPriority.HIGH);
+        PacketEvents.getAPI().getEventManager().registerListener(new PacketHandler(), PacketListenerPriority.HIGH);
     }
 
     public static void onDisable() {
