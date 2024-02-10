@@ -1,4 +1,4 @@
-package com.unrealdinnerbone.crafty.particle;
+package com.unrealdinnerbone.crafty.nms;
 
 import com.google.gson.*;
 import com.mojang.datafixers.util.Pair;
@@ -6,7 +6,6 @@ import com.mojang.serialization.DataResult;
 import com.mojang.serialization.JsonOps;
 import com.unrealdinnerbone.crafty.api.ParticleOption;
 import net.minecraft.core.particles.ParticleOptions;
-import net.minecraft.core.particles.ParticleType;
 import net.minecraft.core.particles.ParticleTypes;
 
 import java.lang.reflect.Type;

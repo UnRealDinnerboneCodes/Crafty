@@ -1,4 +1,4 @@
-package com.unrealdinnerbone.crafty.score;
+package com.unrealdinnerbone.crafty.nms;
 
 import com.unrealdinnerbone.crafty.api.UpdatedObjective;
 import net.minecraft.network.chat.numbers.BlankFormat;

@@ -27,7 +27,7 @@ dependencies {
     paperweightDevelopmentBundle("io.papermc.paper:dev-bundle:${paperVersion}")
     implementation("xyz.jpenilla:reflection-remapper:0.1.0-SNAPSHOT")
 //    implementation 'com.comphenix.protocol:ProtocolLib:5.1.0'
-    compileOnly 'com.github.retrooper.packetevents:spigot:2.2.0'
+//    compileOnly 'com.github.retrooper.packetevents:spigot:2.2.0'
 
 //    implementation ('com.comphenix.packetwrapper:PacketWrapper:1.20-2.2.1') {
 //        exclude group: 'org.spigotmc'

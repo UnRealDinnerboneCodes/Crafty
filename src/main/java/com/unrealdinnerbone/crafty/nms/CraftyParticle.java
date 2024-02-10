@@ -1,4 +1,4 @@
-package com.unrealdinnerbone.crafty.particle;
+package com.unrealdinnerbone.crafty.nms;
 
 import com.unrealdinnerbone.crafty.api.ParticleOption;
 import net.minecraft.core.particles.*;
